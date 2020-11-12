@@ -2,16 +2,42 @@ import React, { Component } from 'react';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import TabContent from './TabContent';
+import { connect } from 'react-redux';
+import { fetchYears } from '../actions';
 
 class TabHead extends Component {
   componentDidMount() {
+    this.props.fetchYears();
+
     // Initialise Tab
     M.Tabs.init(this.Tabs);
+  }
+
+  liTag(tabNo, month) {
+    return (
+      <li className="tab col s3">
+        <a href={`#${tabNo}`}>
+          <b style={{ fontSize: '1vw' }}>{month}</b>
+        </a>
+      </li>
+    );
+  }
+
+  divTag(id, month) {
+    return (
+      <div id={id} className="col s12 " align="center">
+        <p style={{ fontSize: '2.2vw' }}>
+          <b>{month} 2019</b>
+        </p>
+        <TabContent month={month} />
+      </div>
+    );
   }
 
   render() {
     // This section displays the Months in the tabs horizontally along with its respective Tab Content,
     // they are both connected with href.
+    //console.log(this.props.years);
     return (
       <React.Fragment>
         <ul
@@ -21,143 +47,42 @@ class TabHead extends Component {
           id="tabs-swipe-demo"
           className="tabs z-depth-2 hoverable center-align"
         >
-          <li className="tab col s3">
-            <a href="#1">
-              <b style={{ fontSize: '1vw' }}>January</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#2">
-              <b style={{ fontSize: '1vw' }}>February</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#3">
-              <b style={{ fontSize: '1vw' }}>March</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#4">
-              <b style={{ fontSize: '1vw' }}>April</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#5">
-              <b style={{ fontSize: '1vw' }}>May</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#6">
-              <b style={{ fontSize: '1vw' }}>June</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#7">
-              <b style={{ fontSize: '1vw' }}>July</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#8">
-              <b style={{ fontSize: '1vw' }}>August</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#9">
-              <b style={{ fontSize: '1vw' }}>September</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#10">
-              <b style={{ fontSize: '1vw' }}>October</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#11">
-              <b style={{ fontSize: '1vw' }}>November</b>
-            </a>
-          </li>
-          <li className="tab col s3">
-            <a href="#12">
-              <b style={{ fontSize: '1vw' }}>December</b>
-            </a>
-          </li>
+          {this.props.years.map((month) => {
+            this.liTag(month.id, month.monthname);
+          })}
+          {this.liTag('1', 'January')}
+          {this.liTag('2', 'February')}
+          {this.liTag('3', 'March')}
+          {this.liTag('4', 'April')}
+          {this.liTag('5', 'May')}
+          {this.liTag('6', 'June')}
+          {this.liTag('7', 'July')}
+          {this.liTag('8', 'August')}
+          {this.liTag('9', 'September')}
+          {this.liTag('10', 'October')}
+          {this.liTag('11', 'November')}
+          {this.liTag('12', 'December')}
         </ul>
 
-        <div id="1" className="col s12 " align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>January 2019</b>
-          </p>
-          <TabContent month={'January'} />
-        </div>
-        <div id="2" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>February 2019</b>
-          </p>
-          <TabContent month={'February'} />
-        </div>
-        <div id="3" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>March 2019</b>
-          </p>
-          <TabContent month={'March'} />
-        </div>
-        <div id="4" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>April 2019</b>
-          </p>
-          <TabContent month={'April'} />
-        </div>
-        <div id="5" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>May 2019</b>
-          </p>
-          <TabContent month={'May'} />
-        </div>
-        <div id="6" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>June 2019</b>
-          </p>
-          <TabContent month={'June'} />
-        </div>
-        <div id="7" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>July 2019</b>
-          </p>
-          <TabContent month={'July'} />
-        </div>
-        <div id="8" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>August 2019</b>
-          </p>
-          <TabContent month={'August'} />
-        </div>
-        <div id="9" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>September 2019</b>
-          </p>
-          <TabContent month={'September'} />
-        </div>
-        <div id="10" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>October 2019</b>
-          </p>
-          <TabContent month={'October'} />
-        </div>
-        <div id="11" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>November 2019</b>
-          </p>
-          <TabContent month={'November'} />
-        </div>
-        <div id="12" className="col s12" align="center">
-          <p style={{ fontSize: '2.2vw' }}>
-            <b>December 2019</b>
-          </p>
-          <TabContent month={'December'} />
-        </div>
+        {this.divTag('1', 'January')}
+        {this.divTag('2', 'February')}
+        {this.divTag('3', 'March')}
+        {this.divTag('4', 'April')}
+        {this.divTag('5', 'May')}
+        {this.divTag('6', 'June')}
+        {this.divTag('7', 'July')}
+        {this.divTag('8', 'August')}
+        {this.divTag('9', 'September')}
+        {this.divTag('10', 'October')}
+        {this.divTag('11', 'November')}
+        {this.divTag('12', 'December')}
       </React.Fragment>
     );
   }
 }
 
-export default TabHead;
+function mapStateToProps({ years }) {
+  return { years };
+}
+
+export default connect(mapStateToProps, { fetchYears })(TabHead);
